@@ -109,7 +109,7 @@ public class MyCalculator {
             Integer len = Integer.valueOf(ass[1])-Integer.valueOf(ass[0]);
             content += visitor.list.get(i).type_+','+ass[0]+','+ass[1]+','+ id.toString() + ','+ len.toString()+'\n';
         }
-        System.out.println(content);
+        System.out.println(visitor.id);
         visitor.id = 0;
 
         return content;
