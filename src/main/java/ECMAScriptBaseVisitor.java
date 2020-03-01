@@ -1,4 +1,4 @@
-// Generated from /Users/tangsong/AT1/src/main/java/ECMAScript.g4 by ANTLR 4.7.2
+// Generated from /home/doubi/Downloads/Graduate_experiment-master/src/main/java/ECMAScript.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -135,6 +135,13 @@ public class ECMAScriptBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitForLetStatement(ECMAScriptParser.ForLetStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitForInStatement(ECMAScriptParser.ForInStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -143,6 +150,13 @@ public class ECMAScriptBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitForVarInStatement(ECMAScriptParser.ForVarInStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitForLetInStatement(ECMAScriptParser.ForLetInStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

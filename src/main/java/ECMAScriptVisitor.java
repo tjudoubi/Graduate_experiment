@@ -1,4 +1,4 @@
-// Generated from /Users/tangsong/AT1/src/main/java/ECMAScript.g4 by ANTLR 4.7.2
+// Generated from /home/doubi/Downloads/Graduate_experiment-master/src/main/java/ECMAScript.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -116,6 +116,13 @@ public interface ECMAScriptVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitForVarStatement(ECMAScriptParser.ForVarStatementContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ForLetStatement}
+	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForLetStatement(ECMAScriptParser.ForLetStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ForInStatement}
 	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
 	 * @param ctx the parse tree
@@ -129,6 +136,13 @@ public interface ECMAScriptVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitForVarInStatement(ECMAScriptParser.ForVarInStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ForLetInStatement}
+	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForLetInStatement(ECMAScriptParser.ForLetInStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ECMAScriptParser#continueStatement}.
 	 * @param ctx the parse tree

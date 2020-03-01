@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2014 by Bart Kiers
+ * Copyright (c) 2014 by Bart Kiers (original author) and Alexandre Vitorelli (contributor -> ported to CSharp)
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -27,139 +27,117 @@
 grammar ECMAScript;
 
 @parser::members {
-  
-    /**
-     * Returns {@code true} iff on the current index of the parser's
-     * token stream a token of the given {@code type} exists on the
-     * {@code HIDDEN} channel.
-     *
-     * @param type
-     *         the type of the token on the {@code HIDDEN} channel
-     *         to check.
-     *
-     * @return {@code true} iff on the current index of the parser's
-     * token stream a token of the given {@code type} exists on the
-     * {@code HIDDEN} channel.
-     */
-    private boolean here(final int type) {
+
+    ///<summary>Returns <c>true</c> iff on the current index of the parser's
+    ///token stream a token of the given <c>type</c> exists on the
+    ///<c>Hidden</c> channel.</summary>
+    ///<param name="type">the type of the token on the <c>Hidden</c> channel
+    ///to check.</param>
+    ///<returns><c>true</c> iff on the current index of the parser's
+    ///token stream a token of the given <c>type</c> exists on the
+    ///<c>Hidden</c> channel.</returns>
+    private bool here(int type) {
 
         // Get the token ahead of the current index.
-        int possibleIndexEosToken = this.getCurrentToken().getTokenIndex() - 1;
-        Token ahead = _input.get(possibleIndexEosToken);
+        int possibleIndexEosToken = this.CurrentToken.TokenIndex - 1;
+        IToken ahead = _input.Get(possibleIndexEosToken);
 
-        // Check if the token resides on the HIDDEN channel and if it's of the
+        // Check if the token resides on the Hidden channel and if it's of the
         // provided type.
-        return (ahead.getChannel() == Lexer.HIDDEN) && (ahead.getType() == type);
+        return (ahead.Channel == Lexer.Hidden) && (ahead.Type == type);
     }
 
-    /**
-     * Returns {@code true} iff on the current index of the parser's
-     * token stream a token exists on the {@code HIDDEN} channel which
-     * either is a line terminator, or is a multi line comment that
-     * contains a line terminator.
-     *
-     * @return {@code true} iff on the current index of the parser's
-     * token stream a token exists on the {@code HIDDEN} channel which
-     * either is a line terminator, or is a multi line comment that
-     * contains a line terminator.
-     */
-    private boolean lineTerminatorAhead() {
+    ///<summary>Returns <c>true</c> iff on the current index of the parser's
+    ///token stream a token exists on the <c>Hidden</c> channel which
+    ///either is a line terminator, or is a multi line comment that
+    ///contains a line terminator.</summary>
+    ///<returns><c>true</c> iff on the current index of the parser's
+    ///token stream a token exists on the <c>Hidden</c> channel which
+    ///either is a line terminator, or is a multi line comment that
+    ///contains a line terminator.</returns>
+    private bool lineTerminatorAhead() {
 
         // Get the token ahead of the current index.
-        int possibleIndexEosToken = this.getCurrentToken().getTokenIndex() - 1;
-        Token ahead = _input.get(possibleIndexEosToken);
+        int possibleIndexEosToken = this.CurrentToken.TokenIndex - 1;
+        IToken ahead = _input.Get(possibleIndexEosToken);
 
-        if (ahead.getChannel() != Lexer.HIDDEN) {
-            // We're only interested in tokens on the HIDDEN channel.
+        if (ahead.Channel != Lexer.Hidden) {
+            // We're only interested in tokens on the Hidden channel.
             return false;
         }
 
-        if (ahead.getType() == LineTerminator) {
+        if (ahead.Type == LineTerminator) {
             // There is definitely a line terminator ahead.
             return true;
         }
 
-        if (ahead.getType() == WhiteSpaces) {
+        if (ahead.Type == WhiteSpaces) {
             // Get the token ahead of the current whitespaces.
-            possibleIndexEosToken = this.getCurrentToken().getTokenIndex() - 2;
-            ahead = _input.get(possibleIndexEosToken);
+            possibleIndexEosToken = this.CurrentToken.TokenIndex - 2;
+            ahead = _input.Get(possibleIndexEosToken);
         }
 
         // Get the token's text and type.
-        String text = ahead.getText();
-        int type = ahead.getType();
+        string text = ahead.Text;
+        int type = ahead.Type;
 
         // Check if the token is, or contains a line terminator.
-        return (type == MultiLineComment && (text.contains("\r") || text.contains("\n"))) ||
+        return (type == MultiLineComment && (text.Contains("\r") || text.Contains("\n"))) ||
                 (type == LineTerminator);
-    }                                
+    }
 }
 
 @lexer::members {
-                 
+
     // A flag indicating if the lexer should operate in strict mode.
     // When set to true, FutureReservedWords are tokenized, when false,
     // an octal literal can be tokenized.
-    private boolean strictMode = true;
+    private bool strictMode = true;
 
     // The most recently produced token.
-    private Token lastToken = null;
+    private IToken lastToken = null;
 
-    /**
-     * Returns {@code true} iff the lexer operates in strict mode.
-     *
-     * @return {@code true} iff the lexer operates in strict mode.
-     */
-    public boolean getStrictMode() {
+    ///<summary>Returns <c>true</c> iff the lexer operates in strict mode</summary>
+    /// <returns><c>true</c> iff the lexer operates in strict mode.</returns>
+    public bool GetStrictMode() {
         return this.strictMode;
     }
 
-    /**
-     * Sets whether the lexer operates in strict mode or not.
-     *
-     * @param strictMode
-     *         the flag indicating the lexer operates in strict mode or not.
-     */
-    public void setStrictMode(boolean strictMode) {
+	///<summary>Sets whether the lexer operates in strict mode or not.</summary>
+	///<param name="strictMode">the flag indicating the lexer operates in strict mode or not.</param>
+    public void SetStrictMode(bool strictMode) {
         this.strictMode = strictMode;
     }
 
-    /**
-     * Return the next token from the character stream and records this last
-     * token in case it resides on the default channel. This recorded token
-     * is used to determine when the lexer could possibly match a regex
-     * literal.
-     *
-     * @return the next token from the character stream.
-     */
-    @Override
-    public Token nextToken() {
-        
+    ///<summary>Return the next token from the character stream and records this last
+    ///token in case it resides on the default channel. This recorded token
+    ///is used to determine when the lexer could possibly match a regex
+    ///literal.</summary>
+    ///<returns>the next token from the character stream.</returns>
+    public override IToken NextToken() {
+
         // Get the next token.
-        Token next = super.nextToken();
-        
-        if (next.getChannel() == Token.DEFAULT_CHANNEL) {
-            // Keep track of the last token on the default channel.                                              
+        IToken next = base.NextToken();
+
+        if (next.Channel == Lexer.DefaultTokenChannel) {
+            // Keep track of the last token on the default channel.
             this.lastToken = next;
         }
-        
+
         return next;
     }
 
-    /**
-     * Returns {@code true} iff the lexer can match a regex literal.
-     *
-     * @return {@code true} iff the lexer can match a regex literal.
-     */
-    private boolean isRegexPossible() {
-                                       
+    ///<summary>Returns <c>true</c> iff the lexer can match a regex literal.</summary>
+    ///<returns><c>true</c> iff the lexer can match a regex literal.</returns>
+    private bool isRegexPossible() {
+
         if (this.lastToken == null) {
             // No token has been produced yet: at the start of the input,
             // no division is possible, so a regex literal _is_ possible.
             return true;
         }
-        
-        switch (this.lastToken.getType()) {
+
+        switch (this.lastToken.Type) {
             case Identifier:
             case NullLiteral:
             case BooleanLiteral:
@@ -198,7 +176,7 @@ sourceElements
 ///     Statement
 ///     FunctionDeclaration
 sourceElement
- : {_input.LA(1) != Function}? statement
+ : statement
  | functionDeclaration
  ;
 
@@ -222,7 +200,7 @@ statement
  : block
  | variableStatement
  | emptyStatement
- | {_input.LA(1) != OpenBrace}? expressionStatement
+ | expressionStatement
  | ifStatement
  | iterationStatement
  | continueStatement
@@ -253,6 +231,7 @@ statementList
 ///     var VariableDeclarationList ;
 variableStatement
  : Var variableDeclarationList eos
+ | Let variableDeclarationList eos
  ;
 
 /// VariableDeclarationList :
@@ -283,7 +262,7 @@ emptyStatement
 /// ExpressionStatement :
 ///     [lookahead ∉ {{, function}] Expression ;
 expressionStatement
- : expressionSequence eos
+ : {(_input.La(1) != OpenBrace) && (_input.La(1) != Function)}? expressionSequence eos
  ;
 
 /// IfStatement :
@@ -305,8 +284,10 @@ iterationStatement
  | While '(' expressionSequence ')' statement                                                        # WhileStatement
  | For '(' expressionSequence? ';' expressionSequence? ';' expressionSequence? ')' statement         # ForStatement
  | For '(' Var variableDeclarationList ';' expressionSequence? ';' expressionSequence? ')' statement # ForVarStatement
+ | For '(' Let variableDeclarationList ';' expressionSequence? ';' expressionSequence? ')' statement # ForLetStatement
  | For '(' singleExpression In expressionSequence ')' statement                                      # ForInStatement
  | For '(' Var variableDeclaration In expressionSequence ')' statement                               # ForVarInStatement
+ | For '(' Let variableDeclaration In expressionSequence ')' statement                               # ForLetInStatement
  ;
 
 /// ContinueStatement :
@@ -426,7 +407,7 @@ formalParameterList
 functionBody
  : sourceElements?
  ;
-    
+
 /// ArrayLiteral :
 ///     [ Elision? ]
 ///     [ ElementList ]
@@ -454,8 +435,7 @@ elision
 ///     { PropertyNameAndValueList }
 ///     { PropertyNameAndValueList , }
 objectLiteral
- : '{' '}'
- | '{' propertyNameAndValueList ','? '}'
+ : '{' propertyNameAndValueList? ','? '}'
  ;
 
 /// PropertyNameAndValueList :
@@ -464,7 +444,7 @@ objectLiteral
 propertyNameAndValueList
  : propertyAssignment ( ',' propertyAssignment )*
  ;
-    
+
 /// PropertyAssignment :
 ///     PropertyName : AssignmentExpression
 ///     get PropertyName ( ) { FunctionBody }
@@ -473,8 +453,8 @@ propertyAssignment
  : propertyName ':' singleExpression                            # PropertyExpressionAssignment
  | getter '(' ')' '{' functionBody '}'                          # PropertyGetter
  | setter '(' propertySetParameterList ')' '{' functionBody '}' # PropertySetter
- ;           
-    
+ ;
+
 /// PropertyName :
 ///     IdentifierName
 ///     StringLiteral
@@ -484,7 +464,7 @@ propertyName
  | StringLiteral
  | numericLiteral
  ;
-    
+
 /// PropertySetParameterList :
 ///     Identifier
 propertySetParameterList
@@ -497,14 +477,14 @@ propertySetParameterList
 arguments
  : '(' argumentList? ')'
  ;
-    
+
 /// ArgumentList :
 ///     AssignmentExpression
 ///     ArgumentList , AssignmentExpression
 argumentList
  : singleExpression ( ',' singleExpression )*
  ;
-    
+
 /// Expression :
 ///     AssignmentExpression
 ///     Expression , AssignmentExpression
@@ -551,7 +531,7 @@ argumentList
 ///     RelationalExpression > ShiftExpression
 ///     RelationalExpression <= ShiftExpression
 ///     RelationalExpression >= ShiftExpression
-///     RelationalExpression instanceof ShiftExpression 
+///     RelationalExpression instanceof ShiftExpression
 ///     RelationalExpression in ShiftExpression
 ///
 /// ShiftExpression :
@@ -559,7 +539,7 @@ argumentList
 ///     ShiftExpression << AdditiveExpression
 ///     ShiftExpression >> AdditiveExpression
 ///     ShiftExpression >>> AdditiveExpression
-/// 
+///
 /// AdditiveExpression :
 ///     MultiplicativeExpression
 ///     AdditiveExpression + MultiplicativeExpression
@@ -667,21 +647,21 @@ singleExpression
 /// AssignmentOperator : one of
 ///     *=	/=	%=	+=	-=	<<=	>>=	>>>=	&=	^=	|=
 assignmentOperator
- : '*=' 
- | '/=' 
- | '%=' 
- | '+=' 
- | '-=' 
- | '<<=' 
- | '>>=' 
- | '>>>=' 
- | '&=' 
- | '^=' 
+ : '*='
+ | '/='
+ | '%='
+ | '+='
+ | '-='
+ | '<<='
+ | '>>='
+ | '>>>='
+ | '&='
+ | '^='
  | '|='
  ;
 
 literal
- : ( NullLiteral 
+ : ( NullLiteral
    | BooleanLiteral
    | StringLiteral
    | RegularExpressionLiteral
@@ -717,6 +697,7 @@ keyword
  | Else
  | New
  | Var
+ | Let
  | Catch
  | Finally
  | Return
@@ -746,7 +727,6 @@ futureReservedWord
  | Export
  | Import
  | Implements
- | Let
  | Private
  | Public
  | Interface
@@ -757,18 +737,18 @@ futureReservedWord
  ;
 
 getter
- : {_input.LT(1).getText().equals("get")}? Identifier propertyName
+ : {_input.Lt(1).Text.Equals("get")}? Identifier propertyName
  ;
 
 setter
- : {_input.LT(1).getText().equals("set")}? Identifier propertyName
+ : {_input.Lt(1).Text.Equals("set")}? Identifier propertyName
  ;
 
 eos
  : SemiColon
  | EOF
  | {lineTerminatorAhead()}?
- | {_input.LT(1).getType() == CloseBrace}?
+ | {_input.Lt(1).Type == CloseBrace}?
  ;
 
 eof
@@ -814,7 +794,7 @@ LessThan                   : '<';
 MoreThan                   : '>';
 LessThanEquals             : '<=';
 GreaterThanEquals          : '>=';
-Equals                     : '==';
+Equals_                    : '==';
 NotEquals                  : '!=';
 IdentityEquals             : '===';
 IdentityNotEquals          : '!==';
@@ -824,15 +804,15 @@ BitOr                      : '|';
 And                        : '&&';
 Or                         : '||';
 MultiplyAssign             : '*=';
-DivideAssign               : '/='; 
-ModulusAssign              : '%='; 
-PlusAssign                 : '+='; 
-MinusAssign                : '-='; 
-LeftShiftArithmeticAssign  : '<<='; 
-RightShiftArithmeticAssign : '>>='; 
-RightShiftLogicalAssign    : '>>>='; 
-BitAndAssign               : '&='; 
-BitXorAssign               : '^='; 
+DivideAssign               : '/=';
+ModulusAssign              : '%=';
+PlusAssign                 : '+=';
+MinusAssign                : '-=';
+LeftShiftArithmeticAssign  : '<<=';
+RightShiftArithmeticAssign : '>>=';
+RightShiftLogicalAssign    : '>>>=';
+BitAndAssign               : '&=';
+BitXorAssign               : '^=';
 BitOrAssign                : '|=';
 
 /// 7.8.1 Null Literals
@@ -871,6 +851,7 @@ Case       : 'case';
 Else       : 'else';
 New        : 'new';
 Var        : 'var';
+Let        : 'let';
 Catch      : 'catch';
 Finally    : 'finally';
 Return     : 'return';
@@ -899,17 +880,16 @@ Const   : 'const';
 Export  : 'export';
 Import  : 'import';
 
-/// The following tokens are also considered to be FutureReservedWords 
-/// when parsing strict mode  
-Implements : {strictMode}? 'implements';
-Let        : {strictMode}? 'let';
-Private    : {strictMode}? 'private';
-Public     : {strictMode}? 'public';
-Interface  : {strictMode}? 'interface';
-Package    : {strictMode}? 'package';
-Protected  : {strictMode}? 'protected';
-Static     : {strictMode}? 'static';
-Yield      : {strictMode}? 'yield';
+/// The following tokens are also considered to be FutureReservedWords
+/// when parsing strict mode
+Implements : 'implements';
+Private    : 'private';
+Public     : 'public';
+Interface  : 'interface';
+Package    : 'package';
+Protected  : 'protected';
+Static     : 'static';
+Yield      : 'yield';
 
 /// 7.6 Identifier Names and Identifiers
 Identifier
@@ -933,6 +913,10 @@ MultiLineComment
 
 SingleLineComment
  : '//' ~[\r\n\u2028\u2029]* -> channel(HIDDEN)
+ ;
+
+HtmlComment
+ : '<!--' .*? '-->' -> channel(HIDDEN)
  ;
 
 UnexpectedCharacter
@@ -986,7 +970,7 @@ fragment EscapeCharacter
  ;
 
 fragment LineContinuation
- : '\\' LineTerminatorSequence 
+ : '\\' LineTerminatorSequence
  ;
 
 fragment LineTerminatorSequence
@@ -1260,8 +1244,10 @@ fragment UnicodeLetter
  | [\u3105-\u312C]
  | [\u3131-\u318E]
  | [\u31A0-\u31B7]
- | [\u3400-\u4DBF]
- | [\u4E00-\u9FFF]
+ | [\u3400]
+ | [\u4DB5]
+ | [\u4E00]
+ | [\u9FA5]
  | [\uA000-\uA48C]
  | [\uAC00]
  | [\uD7A3]
@@ -1299,7 +1285,7 @@ fragment UnicodeCombiningMark
  | [\u0591-\u05A1]
  | [\u05A3-\u05B9]
  | [\u05BB-\u05BD]
- | [\u05BF] 
+ | [\u05BF]
  | [\u05C1-\u05C2]
  | [\u05C4]
  | [\u064B-\u0655]
@@ -1484,7 +1470,7 @@ fragment RegularExpressionNonTerminator
 fragment RegularExpressionBackslashSequence
  : '\\' RegularExpressionNonTerminator
  ;
- 
+
 /// RegularExpressionClass ::
 ///     [ RegularExpressionClassChars ]
 ///
@@ -1494,7 +1480,7 @@ fragment RegularExpressionBackslashSequence
 fragment RegularExpressionClass
   : '[' RegularExpressionClassChar* ']'
   ;
- 
+
 /// RegularExpressionClassChar ::
 ///     RegularExpressionNonTerminator but not ] or \
 ///     RegularExpressionBackslashSequence
