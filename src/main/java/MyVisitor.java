@@ -25,6 +25,9 @@ public class MyVisitor extends ECMAScriptBaseVisitor {
         return super.visitIfStatement(ctx);
     }
 
+
+
+
     @Override
     public Object visitInitialiser(ECMAScriptParser.InitialiserContext ctx) {
         interval_sss.add(ctx.getSourceInterval());
