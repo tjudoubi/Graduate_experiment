@@ -20,11 +20,23 @@ file=open(dirPath+file_name)
 text=file.read()
 list_x = text.split('\n')
 
-def node_list_cmp(node_a,node_b):
+def list_cmp(node_a,node_b):
     if node_a.le != node_b.le:
         return node_a.le - node_b.le
     else:
         return node_b.id - node_a.id
+
+def node_list_cmp(x,y):
+	return x-y
+
+def run(_id,Tree_list):
+	print(_id)
+	Tree_list[_id].node_list.sort(cmp = node_list_cmp)
+	length_ = len(Tree_list[_id].node_list)
+	for i in range(length_):
+		run(Tree_list[_id].node_list[i],Tree_list)
+	
+
 
 Tree_list = []
 list = []
@@ -44,7 +56,7 @@ while i < length-1:
     Tree_list.append(node2)
     i += 1
 #print(len(list))
-list.sort(cmp = node_list_cmp)
+list.sort(cmp = list_cmp)
 #print(list[len(list)-1].id)
 for i in range(len(list)):
     if list[i].le == -1:
@@ -56,5 +68,4 @@ for i in range(len(list)):
             break
     #print("sdsdsdsdsdsdsdsdsd")
 
-# for i in range(len(list)):
-#     print(len(Tree_list[0].node_list))
+run(0,Tree_list)
