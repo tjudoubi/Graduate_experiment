@@ -7,15 +7,20 @@ class Node:
         self.le = le
 
 class Tree_node:
-    def __init__(self):
+    def __init__(self,type_,L,R,id,le):
         self.node_list = []
+	self.type_ = type_
+        self.L = L
+        self.R = R
+        self.id = id
+        self.le = le
 
 import os
 
-dirPath = "/home/doubi/KKID_LSK/target_3/"
+dirPath = "/home/doubi/KKID_LSK/target_5/"
 list_ = []
 files = os.listdir(dirPath)
-file_name = "add-small-constant-overflow-recovery.js.txt"
+file_name = "ai-create-this-to-new-object-fire.js.txt"
 file=open(dirPath+file_name)
 text=file.read()
 list_x = text.split('\n')
@@ -52,7 +57,7 @@ while i < length-1:
     le = int(temp_[4])
     node = Node(type_,L,R,id,le)
     list.append(node)
-    node2 = Tree_node()
+    node2 = Tree_node(type_,L,R,id,le)
     Tree_list.append(node2)
     i += 1
 #print(len(list))

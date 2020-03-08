@@ -1,42 +1,86 @@
 class Node:
-    def __init__(self,type_,L,R,id,len):
+    def __init__(self,type_,L,R,id,le):
         self.type_ = type_
         self.L = L
         self.R = R
         self.id = id
-        self.len = len
+        self.le = le
 
 class Tree_node:
-    Tree_node_list = []
+    def __init__(self,type_,L,R,id,le):
+        self.node_list = []
+        self.type_ = type_
+        self.L = L
+        self.R = R
+        self.id = id
+        self.le = le
 
 import os
 
-def node_list_cmp(node_a,node_b):
+def list_cmp(node_a,node_b):
     if node_a.le != node_b.le:
         return node_a.le - node_b.le
     else:
         return node_b.id - node_a.id
 
-dirPath = "/home/doubi/KKID_LSK/target_3/"
+def node_list_cmp(x,y):
+    return x-y
 
+def run(_id,Tree_list,h):
+    global m
+    m = max(m,h)
+    print(_id,len(Tree_list[_id].node_list))
+    Tree_list[_id].node_list.sort(cmp = node_list_cmp)
+    length_ = len(Tree_list[_id].node_list)
+    for i in range(length_):
+        run(Tree_list[_id].node_list[i],Tree_list,h+1)
+
+
+
+dirPath = "/home/doubi/KKID_LSK/target_5/"
+m = 0
 files = os.listdir(dirPath)
 
 for file_name in files:
     file=open(dirPath+file_name)
+    print(file_name)
     text=file.read()
     list_x = text.split('\n')
 
+    Tree_list = []
     list = []
     i = 0
-    while i < len(list_x):
+    length = len(list_x)
+    while i < length-1:
         temp_ = list_x[i].split(',')
+        # print(temp_)
         type_ = temp_[0]
-        L = int(temp[1])
-        R = int(temp[2])
-        id = int(temp[3])
-        len = int(temp[4])
-        node = Node(type_,L,R,id,len)
+        L = int(temp_[1])
+        R = int(temp_[2])
+        id = int(temp_[3])
+        le = int(temp_[4])
+        node = Node(type_,L,R,id,le)
         list.append(node)
+        node2 = Tree_node(type_,L,R,id,le)
+        Tree_list.append(node2)
         i += 1
-
-    list.sort(cmp = node_list_cmp)
+    #print(len(list))
+    list.sort(cmp = list_cmp)
+    #print(list[len(list)-1].id)
+    for i in range(len(list)):
+        if list[i].le == -1:
+            continue;
+        for j in range(i+1,len(list)):
+            if list[i].le <= list[j].le and list[i].L >= list[j].L and list[i].R <= list[j].R:
+                Tree_list[list[j].id].node_list.append(list[i].id)
+                print(list[i].id,list[j].id)
+                break
+        #print("sdsdsdsdsdsdsdsdsd")
+    global m
+    m = 0
+    h = 0
+    # run(0,Tree_list,h)
+    list_for_nest
+    count_for_nest(0,Tree_list,)
+    print(m)
+    print("-----------------------------------------------------------------------------------------------------")

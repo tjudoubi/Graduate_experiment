@@ -1030,7 +1030,14 @@ public class YVisitor extends JavaScriptParserBaseVisitor {
 //
 //    @Override public Object visitForOfStatement(JavaScriptParser.ForOfStatementContext ctx) { return visitChildren(ctx); }
 //
-//    @Override public Object visitVarModifier(JavaScriptParser.VarModifierContext ctx) { return visitChildren(ctx); }
+    @Override public Object visitVarModifier(JavaScriptParser.VarModifierContext ctx){
+        YVisitor.Node node = new YVisitor.Node();
+        node.interval = ctx.getSourceInterval().toString();
+        node.type_ = "VarModifier";
+        node.id = id;
+        id += 1;
+        list.add(node);
+        return super.visitVarModifier(ctx);  }
 //
 //    @Override public Object visitContinueStatement(JavaScriptParser.ContinueStatementContext ctx) { return visitChildren(ctx); }
 //
@@ -1222,7 +1229,7 @@ public class YVisitor extends JavaScriptParserBaseVisitor {
 
     @Override public Object visitAwaitExpression(JavaScriptParser.AwaitExpressionContext ctx) { YVisitor.Node node = new YVisitor.Node();
         node.interval = ctx.getSourceInterval().toString();
-        node.type_ = "Eos";
+        node.type_ = "AwaitExpression";
         node.id = id;
         id += 1;
         list.add(node);
@@ -1260,7 +1267,7 @@ public class YVisitor extends JavaScriptParserBaseVisitor {
 
     @Override public Object visitSuperExpression(JavaScriptParser.SuperExpressionContext ctx) { YVisitor.Node node = new YVisitor.Node();
         node.interval = ctx.getSourceInterval().toString();
-        node.type_ = "Eos";
+        node.type_ = "SuperExpression";
         node.id = id;
         id += 1;
         list.add(node);
@@ -1397,4 +1404,5 @@ public class YVisitor extends JavaScriptParserBaseVisitor {
 //    @Override public Object visitSetter(JavaScriptParser.SetterContext ctx) { return visitChildren(ctx); }
 //
 //    @Override public Object visitEos(JavaScriptParser.EosContext ctx) { return visitChildren(ctx); }
+
 }

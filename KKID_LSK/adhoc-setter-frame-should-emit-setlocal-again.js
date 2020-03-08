@@ -5,7 +5,7 @@ X.prototype.__defineSetter__('f', function* () {
 });
 
 function foo(o) {
-    i+'';
+    i+=1;
     for (var i = 0; i < 1000; ++i) {
         o.f = 0;
     }

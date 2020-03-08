@@ -7,7 +7,7 @@ Created on 2019-2-14
 @author: Zyx
 '''
 
-dirPath = "/home/doubi/KKID_LSK/target/"
+dirPath = "/home/doubi/KKID_LSK/target_4/"
 # python 使用类创建结构体
 class Myclass(object):
 	def __init__(self, name, numOfIf, numOfWhile, numOfFor, numOfStatement, numOfvariableDeclaration, maxDepthOfAST,numOfLoc,Cyclomatic,Dependency_count,Halstead_difficulty,Halstead_volume,Halstead_effort,numOfMethod,numOfSwitch,numOfExpression,numOfIteration):

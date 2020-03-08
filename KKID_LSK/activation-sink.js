@@ -14,7 +14,6 @@ function foo(b) {
     }
     return result;
 }
-
 noInline(bar);
 noInline(foo);
 

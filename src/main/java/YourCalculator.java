@@ -83,23 +83,24 @@ public class YourCalculator {
         ANTLRInputStream in = new ANTLRInputStream(expr);
 
         //用 in 构造词法分析器 lexer，词法分析的作用是产生记号
-        ECMAScriptLexer lexer = new ECMAScriptLexer(in);
+        JavaScriptLexer lexer = new JavaScriptLexer(in);
 
         //用词法分析器 lexer 构造一个记号流 tokens
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
         //再使用 tokens 构造语法分析器 parser,至此已经完成词法分析和语法分析的准备工作
-        ECMAScriptParser parser = new ECMAScriptParser(tokens);
+        JavaScriptParser parser = new JavaScriptParser(tokens);
         ParseTree tree = parser.program();
 //        ParseTreeWalker walker = new ParseTreeWalker();
 //        //walker.walk(new MyListener(),tree);
 //        System.out.println(tree.toStringTree(parser));
 
-        YourVisitor visitor = new YourVisitor();
+        YVisitor visitor = new YVisitor();
         visitor.visit(tree);
 //        System.out.println(visitor.list.toString());
 //        System.out.println(YourVisitor.id);
         int length = visitor.list.size();
+        System.out.println(length);
         String content = "";
         for(int i = 0;i < length;i++){
             Integer id = visitor.list.get(i).id;
@@ -107,7 +108,7 @@ public class YourCalculator {
             Integer len = Integer.valueOf(ass[1])-Integer.valueOf(ass[0]);
             content += visitor.list.get(i).type_+','+ass[0]+','+ass[1]+','+ id.toString() + ','+ len.toString()+'\n';
         }
-        System.out.println(visitor.id);
+
         visitor.id = 0;
 
         return content;
@@ -129,9 +130,9 @@ public class YourCalculator {
                 res = res + str;
             }
             String write_content = run(res);
-//            go_write(write_content,file_string,"target/");
-//            String node_content = run_2(res);
-//            go_write(node_content,file_string,"target_3/");
+            go_write(write_content,file_string,"target_4/");
+            String node_content = run_2(res);
+            go_write(node_content,file_string,"target_5/");
 //
 //
 //
