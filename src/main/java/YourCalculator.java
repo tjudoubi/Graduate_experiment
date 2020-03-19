@@ -129,6 +129,7 @@ public class YourCalculator {
             while ((str = bf.readLine()) != null) {
                 res = res + str;
             }
+            System.out.println(res);
             String write_content = run(res);
             go_write(write_content,file_string,"target_4/");
             String node_content = run_2(res);

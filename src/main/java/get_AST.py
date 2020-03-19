@@ -35,7 +35,41 @@ def run(_id,Tree_list,h):
     for i in range(length_):
         run(Tree_list[_id].node_list[i],Tree_list,h+1)
 
+# def count_for_nest(_id,Tree_list,list_for_nest):
+#     length_ = len(Tree_list[_id].node_list)
+#     maxx = 0
+#     for i in range(length_):
+#         count_for_nest(Tree_list[_id].node_list[i],Tree_list,list_for_nest)
+#         maxx = max(maxx,list_for_nest[Tree_list[_id].node_list[i]])
+#     str_type_ = Tree_list[_id].type_
+#     if str_type_ == 'ForStatement' or str_type_ == 'ForInStatement' or str_type_ == 'ForOfStatement' or str_type_ == 'WhileStatement' or str_type_ == 'DoStatement' or str_type_ == 'IfStatement' or str_type_ == 'SwitchStatement':
+#         list_for_nest[_id] = maxx+1
+#         print(_id,list_for_nest[_id])
+#     else:
+#         list_for_nest[_id] = maxx
 
+
+
+def count_for_nest(_id,Tree_list,list_for_nest,list_number):
+    length_ = len(Tree_list[_id].node_list)
+    maxx = 0
+    global z
+    str_type_ = Tree_list[_id].type_
+    if str_type_ == 'ForStatement' or str_type_ == 'ForInStatement' or str_type_ == 'ForOfStatement' or str_type_ == 'WhileStatement' or str_type_ == 'DoStatement' or str_type_ == 'IfStatement' or str_type_ == 'SwitchStatement':
+        z += 1
+
+
+    for i in range(length_):
+        count_for_nest(Tree_list[_id].node_list[i],Tree_list,list_for_nest,list_number)
+        maxx = max(maxx,list_for_nest[Tree_list[_id].node_list[i]])
+    if str_type_ == 'ForStatement' or str_type_ == 'ForInStatement' or str_type_ == 'ForOfStatement' or str_type_ == 'WhileStatement' or str_type_ == 'DoStatement' or str_type_ == 'IfStatement' or str_type_ == 'SwitchStatement':
+        list_for_nest[_id] = maxx+1
+        if z == 1:
+            list_number.append(list_for_nest[_id])
+        z -= 1
+        print(_id,list_for_nest[_id])
+    else:
+        list_for_nest[_id] = maxx
 
 dirPath = "/home/doubi/KKID_LSK/target_5/"
 m = 0
@@ -73,14 +107,19 @@ for file_name in files:
         for j in range(i+1,len(list)):
             if list[i].le <= list[j].le and list[i].L >= list[j].L and list[i].R <= list[j].R:
                 Tree_list[list[j].id].node_list.append(list[i].id)
-                print(list[i].id,list[j].id)
+                # print(list[i].id,list[j].id)
                 break
         #print("sdsdsdsdsdsdsdsdsd")
     global m
     m = 0
     h = 0
+    global z
+    z = 0
     # run(0,Tree_list,h)
-    list_for_nest
-    count_for_nest(0,Tree_list,)
+    list_for_nest = [0 for x in range(0,len(Tree_list))]
+    list_number = []
+    count_for_nest(0,Tree_list,list_for_nest,list_number)
     print(m)
+    for il in list_number:
+        print(il)
     print("-----------------------------------------------------------------------------------------------------")

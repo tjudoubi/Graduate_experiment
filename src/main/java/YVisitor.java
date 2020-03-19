@@ -1028,7 +1028,13 @@ public class YVisitor extends JavaScriptParserBaseVisitor {
 //
 //    @Override public Object visitForInStatement(JavaScriptParser.ForInStatementContext ctx) { return visitChildren(ctx); }
 //
-//    @Override public Object visitForOfStatement(JavaScriptParser.ForOfStatementContext ctx) { return visitChildren(ctx); }
+    @Override public Object visitForOfStatement(JavaScriptParser.ForOfStatementContext ctx) { YVisitor.Node node = new YVisitor.Node();
+        node.interval = ctx.getSourceInterval().toString();
+        node.type_ = "ForOfStatement";
+        node.id = id;
+        id += 1;
+        list.add(node);
+        return super.visitForOfStatement(ctx);  }
 //
     @Override public Object visitVarModifier(JavaScriptParser.VarModifierContext ctx){
         YVisitor.Node node = new YVisitor.Node();
