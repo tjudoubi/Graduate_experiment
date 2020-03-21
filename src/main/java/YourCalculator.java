@@ -116,7 +116,7 @@ public class YourCalculator {
     }
 
     public static void main(String[] args) throws Exception{
-        ArrayList<String> files = getFiles("/home/doubi/KKID_LSK/");
+        ArrayList<String> files = getFiles("/home/doubi/opo_js/");
 
         for(int i = 0;i < files.size();i++) {
             String file_string = files.get(i);
@@ -148,7 +148,7 @@ public class YourCalculator {
         String file_name = file_names[file_names.length-1];
         FileWriter writer;
         try {
-            writer = new FileWriter("/home/doubi/KKID_LSK/"+resr+file_name+".txt");
+            writer = new FileWriter("/home/doubi/opo_js/"+resr+file_name+".txt");
 
             writer.write("");//清空原文件内容
             writer.write(write_content);
