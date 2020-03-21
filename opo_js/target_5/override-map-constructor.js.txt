@@ -1,0 +1,6 @@
+program,0,8,0,8
+SourceElements,0,7,1,7
+SourceElement,0,7,2,7
+SourceElement,0,7,3,7
+FunctionDeclaration,0,7,4,7
+FunctionBody,7,6,5,-1

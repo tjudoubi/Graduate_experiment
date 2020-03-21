@@ -1,0 +1,1 @@
+(program (sourceElements (sourceElement (statement (functionDeclaration function Map ( ) { functionBody })))) <EOF>)
