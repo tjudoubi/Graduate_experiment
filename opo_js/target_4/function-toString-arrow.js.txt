@@ -1,1 +1,0 @@
-(program (sourceElements (sourceElement (statement (expressionStatement (expressionSequence (singleExpression (singleExpression (singleExpression ( (expressionSequence (singleExpression (anoymousFunction async (arrowFunctionParameters ( )) => (arrowFunctionBody (singleExpression (objectLiteral { })))))) )) . (identifierName toString)) (arguments ( )))) (eos ;))))) <EOF>)

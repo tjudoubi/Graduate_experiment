@@ -7,7 +7,7 @@ Created on 2019-2-14
 @author: Zyx
 '''
 
-dirPath = "/home/doubi/KKID_LSK/target_4/"
+dirPath = "/home/doubi/opo_js/target_4/"
 # python 使用类创建结构体
 class Myclass(object):
 	def __init__(self, name, numOfIf, numOfWhile, numOfFor, numOfStatement, numOfvariableDeclaration, maxDepthOfAST,numOfLoc,Cyclomatic,Dependency_count,Halstead_difficulty,Halstead_volume,Halstead_effort,numOfMethod,numOfSwitch,numOfExpression,numOfIteration):
@@ -176,19 +176,23 @@ for file_name in files:
 				ans += 1
  		i+=1
 
-	print(height,ans)
+	#print(height,ans)
 	maxDepthOfAST = height
 
 	#test1 = myclass.make_struct(numOfIf, numOfWhile, numOfFor, numOfStatement,numOfvariableDeclaration,maxDepthOfAST)
 	##################################################################################################################
 	#################################################################################################################3
 	file_name_length = len(file_name)
-	command = "cr /home/doubi/KKID_LSK/"+file_name[0:file_name_length-4]
+	command = "cr /home/doubi/opo_js/"+file_name[0:file_name_length-4]
 	print(command)
 	back = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,stderr=subprocess.PIPE).communicate()
 	#time.sleep(2)
 	str_ll = str(back[0].decode())
-	numOfLoc,Cyclomatic,Dependency_count,Halstead_difficulty,Halstead_volume,Halstead_effort,numOfMethhod = extract(str_ll)
+	if "Fatal error [getReports]" in str_ll:
+		#print("Fatal error [getReports]")
+		numOfLoc,Cyclomatic,Dependency_count,Halstead_difficulty,Halstead_volume,Halstead_effort,numOfMethhod = -1,-1,-1,-1,-1,-1,-1
+	else:
+		numOfLoc,Cyclomatic,Dependency_count,Halstead_difficulty,Halstead_volume,Halstead_effort,numOfMethhod = extract(str_ll)
 
 	test1 = Myclass(file_name,numOfIf, numOfWhile, numOfFor, numOfStatement,numOfvariableDeclaration,maxDepthOfAST,numOfLoc,Cyclomatic,Dependency_count,Halstead_difficulty,Halstead_volume,Halstead_effort,numOfMethhod,numOfSwitch,numOfExpression,numOfIteration)
 	list_.append(test1)
@@ -203,7 +207,7 @@ content = ""
 for temp in list_:
 	content += str(temp.name)+','+str(temp.numOfIf)+','+str(temp.numOfWhile)+','+str(temp.numOfFor)+','+str(temp.numOfStatement)+','+str(temp.numOfvariableDeclaration)+','+str(temp.maxDepthOfAST)+','+str(temp.numOfLoc)+','+str(temp.Cyclomatic)+','+str(temp.numOfDepend)+','+str(temp.Halstead_difficulty)+','+str(temp.Halstead_volume)+','+str(temp.Halstead_effort)+','+str(temp.numOfMethod)+','+str(temp.numOfSwitch)+','+str(temp.numOfExpression)+','+str(temp.numOfIteration)+'\n'
 
-f = open('/home/doubi/KKID_LSK/target_2/vector_1', 'w') #清空文件内容再写
+f = open('/home/doubi/opo_js/target_2/vector_1', 'w') #清空文件内容再写
 f.write(content)
 f.close()
 
