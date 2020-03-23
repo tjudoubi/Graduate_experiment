@@ -16,7 +16,7 @@ class Tree_node:
         self.le = le
 
 import os
-
+content = ""
 def list_cmp(node_a,node_b):
     if node_a.le != node_b.le:
         return node_a.le - node_b.le
@@ -26,14 +26,14 @@ def list_cmp(node_a,node_b):
 def node_list_cmp(x,y):
     return x-y
 
-def run(_id,Tree_list,h):
-    global m
-    m = max(m,h)
-    print(_id,len(Tree_list[_id].node_list))
+def run(_id,Tree_list):
+    global numOfNodes
+    numOfNodes += 1
+    #print(_id,len(Tree_list[_id].node_list))
     Tree_list[_id].node_list.sort(cmp = node_list_cmp)
     length_ = len(Tree_list[_id].node_list)
     for i in range(length_):
-        run(Tree_list[_id].node_list[i],Tree_list,h+1)
+        run(Tree_list[_id].node_list[i],Tree_list)
 
 # def count_for_nest(_id,Tree_list,list_for_nest):
 #     length_ = len(Tree_list[_id].node_list)
@@ -50,28 +50,30 @@ def run(_id,Tree_list,h):
 
 
 
-def count_for_nest(_id,Tree_list,list_for_nest,list_number):
+def count_for_nest(_id,Tree_list,list_for_nest,list_number,set_a):
     length_ = len(Tree_list[_id].node_list)
     maxx = 0
     global z
     str_type_ = Tree_list[_id].type_
+    set_a.add(str_type_)
     if str_type_ == 'ForStatement' or str_type_ == 'ForInStatement' or str_type_ == 'ForOfStatement' or str_type_ == 'WhileStatement' or str_type_ == 'DoStatement' or str_type_ == 'IfStatement' or str_type_ == 'SwitchStatement':
         z += 1
-
+    global numOfNodes
+    numOfNodes+=1
 
     for i in range(length_):
-        count_for_nest(Tree_list[_id].node_list[i],Tree_list,list_for_nest,list_number)
+        count_for_nest(Tree_list[_id].node_list[i],Tree_list,list_for_nest,list_number,set_a)
         maxx = max(maxx,list_for_nest[Tree_list[_id].node_list[i]])
     if str_type_ == 'ForStatement' or str_type_ == 'ForInStatement' or str_type_ == 'ForOfStatement' or str_type_ == 'WhileStatement' or str_type_ == 'DoStatement' or str_type_ == 'IfStatement' or str_type_ == 'SwitchStatement':
         list_for_nest[_id] = maxx+1
         if z == 1:
             list_number.append(list_for_nest[_id])
         z -= 1
-        print(_id,list_for_nest[_id])
+        #print(_id,list_for_nest[_id])
     else:
         list_for_nest[_id] = maxx
 
-dirPath = "/home/doubi/KKID_LSK/target_5/"
+dirPath = "/home/doubi/opo_js/target_5/"
 m = 0
 files = os.listdir(dirPath)
 
@@ -110,16 +112,34 @@ for file_name in files:
                 # print(list[i].id,list[j].id)
                 break
         #print("sdsdsdsdsdsdsdsdsd")
-    global m
-    m = 0
+    global numOfNodes
+    numOfNodes = 0
     h = 0
     global z
     z = 0
-    # run(0,Tree_list,h)
+    set_a = set()
+    #run(0,Tree_list)
     list_for_nest = [0 for x in range(0,len(Tree_list))]
     list_number = []
-    count_for_nest(0,Tree_list,list_for_nest,list_number)
-    print(m)
+    count_for_nest(0,Tree_list,list_for_nest,list_number,set_a)
+    #print(len(set_a))
+    avDepthOfNest = 0
+    maxDepthOfNest = 0
     for il in list_number:
-        print(il)
+	maxDepthOfNest  = max(maxDepthOfNest,il)
+        avDepthOfNest += il
+    if len(list_number)==0:
+	avDepthOfNest = 0
+    else:
+    	avDepthOfNest /= len(list_number)
+    print(numOfNodes)
+    print(len(set_a))
+    print(maxDepthOfNest)
+    print(avDepthOfNest)
+    content += file_name + ','+ str(numOfNodes) + ',' + str(len(set_a)) + ',' + str(maxDepthOfNest) + ',' + str(avDepthOfNest)+'\n'
+	
     print("-----------------------------------------------------------------------------------------------------")
+
+f = open('/home/doubi/opo_js/target_2/vector_2', 'w')
+f.write(content)
+f.close()
