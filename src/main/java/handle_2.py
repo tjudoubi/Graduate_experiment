@@ -10,11 +10,10 @@ Created on 2019-2-14
 dirPath = "/home/doubi/opo_js/target_4/"
 # python 使用类创建结构体
 class Myclass(object):
-	def __init__(self, name, numOfIf, numOfWhile, numOfFor, numOfStatement, numOfvariableDeclaration, maxDepthOfAST,numOfLoc,Cyclomatic,Dependency_count,Halstead_difficulty,Halstead_volume,Halstead_effort,numOfMethod,numOfSwitch,numOfExpression,numOfClass):
+	def __init__(self, numOfIteration,name, numOfIf, numOfStatement, numOfvariableDeclaration, maxDepthOfAST,numOfLoc,Cyclomatic,Dependency_count,Halstead_difficulty,Halstead_volume,Halstead_effort,numOfMethod,numOfSwitch,numOfExpression,numOfClass):
 		self.name = name
 		self.numOfIf = numOfIf
-            	self.numOfWhile = numOfWhile
-            	self.numOfFor = numOfFor
+            	
 	    	self.numOfStatement = numOfStatement
 	    	self.numOfvariableDeclaration = numOfvariableDeclaration
 	    	self.maxDepthOfAST = maxDepthOfAST
@@ -28,6 +27,7 @@ class Myclass(object):
 		self.numOfSwitch = numOfSwitch
 		self.numOfExpression = numOfExpression
 		self.numOfClass= numOfClass
+		self.numOfIteration = numOfIteration
 
 
 
@@ -131,11 +131,11 @@ for file_name in files:
 	str2 = "ifStatement "
 	numOfIf = (length - len(text.replace(str2,""))) / len(str2)
 
-	str2 = "for "
-	numOfFor = (length - len(text.replace(str2,""))) / len(str2)
-
-	str2 = "while "
-	numOfWhile = (length - len(text.replace(str2,""))) / len(str2)
+#	str2 = "for "
+#	numOfFor = (length - len(text.replace(str2,""))) / len(str2)
+#
+#	str2 = "while "
+#	numOfWhile = (length - len(text.replace(str2,""))) / len(str2)
 
 	str2 = "(statement "
 	numOfStatement = (length - len(text.replace(str2,""))) / len(str2)
@@ -145,6 +145,9 @@ for file_name in files:
 
 	str2 = "(switchStatement "
 	numOfSwitch = (length - len(text.replace(str2,""))) / len(str2)
+
+	str2 = "(iterationStatement "
+	numOfIteration = (length - len(text.replace(str2,""))) / len(str2)
 
 	str2 = "(expressionStatement "
 	numOfExpression = (length - len(text.replace(str2,""))) / len(str2)
@@ -194,7 +197,7 @@ for file_name in files:
 	else:
 		numOfLoc,Cyclomatic,Dependency_count,Halstead_difficulty,Halstead_volume,Halstead_effort,numOfMethhod = extract(str_ll)
 
-	test1 = Myclass(file_name,numOfIf, numOfWhile, numOfFor, numOfStatement,numOfvariableDeclaration,maxDepthOfAST,numOfLoc,Cyclomatic,Dependency_count,Halstead_difficulty,Halstead_volume,Halstead_effort,numOfMethhod,numOfSwitch,numOfExpression,numOfClass)
+	test1 = Myclass(numOfIteration,file_name,numOfIf, numOfStatement,numOfvariableDeclaration,maxDepthOfAST,numOfLoc,Cyclomatic,Dependency_count,Halstead_difficulty,Halstead_volume,Halstead_effort,numOfMethhod,numOfSwitch,numOfExpression,numOfClass)
 	list_.append(test1)
 	#print("back0----", str_ll) # 注意需要进行解码操作，默认输出的是字节
 	#print("back1----", back[1].decode())  # back是一个元祖，可以通过元祖取值的方式获取结果
@@ -205,8 +208,10 @@ for file_name in files:
 ##############################################################################################################
 content = ""
 for temp in list_:
-	content += str(temp.name)+','+str(temp.numOfIf)+','+str(temp.numOfWhile)+','+str(temp.numOfFor)+','+str(temp.numOfStatement)+','+str(temp.numOfvariableDeclaration)+','+str(temp.maxDepthOfAST)+','+str(temp.numOfLoc)+','+str(temp.Cyclomatic)+','+str(temp.numOfDepend)+','+str(temp.Halstead_difficulty)+','+str(temp.Halstead_volume)+','+str(temp.Halstead_effort)+','+str(temp.numOfMethod)+','+str(temp.numOfSwitch)+','+str(temp.numOfExpression)+','+str(temp.numOfClass)+'\n'
+	content += str(temp.name)+','+str(temp.numOfIf)+','+str(temp.numOfStatement)+','+str(temp.numOfvariableDeclaration)+','+str(temp.maxDepthOfAST)+','+str(temp.numOfLoc)+','+str(temp.Cyclomatic)+','+str(temp.numOfDepend)+','+str(temp.Halstead_difficulty)+','+str(temp.Halstead_volume)+','+str(temp.Halstead_effort)+','+str(temp.numOfMethod)+','+str(temp.numOfSwitch)+','+str(temp.numOfExpression)+','+str(temp.numOfClass)+','+str(temp.numOfIteration)+'\n'
 
 f = open('/home/doubi/opo_js/target_2/vector_1', 'w') #清空文件内容再写
 f.write(content)
 f.close()
+
+
