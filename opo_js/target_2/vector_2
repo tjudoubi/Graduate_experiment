@@ -260,7 +260,6 @@ generator-function-expression-sinking-osrexit.js.txt,285,38,2,1
 object-keys-changed-index.js.txt,261,39,1,1
 string-code-point-at-basic.js.txt,24,17,0,0
 disable-gigacage-typed-arrays.js.txt,201,42,2,1
-async-await-syntax.js.txt,1906,49,1,1
 regress-159883.js.txt,45,22,1,1
 date-get-month-jit.js.txt,186,35,1,1
 super-call-does-not-look-up-constructor.js.txt,113,36,1,1
@@ -454,7 +453,6 @@ array-slice-zero-args.js.txt,171,40,2,1
 switch-typeof-indirect.js.txt,322,43,1,1
 regress-189124.js.txt,223,36,1,1
 object-create-undefined.js.txt,232,42,1,1
-string-overflow-createError-fit.js.txt,94,30,1,1
 array-storage-array-unshift.js.txt,89,29,1,1
 get-stack-double.js.txt,78,30,2,1
 array-push-multiple-double-nan.js.txt,248,39,2,1
@@ -485,7 +483,6 @@ fiat-double-to-int52-then-exit-not-int52.js.txt,158,33,2,1
 jsc-setImpureGetterDelegate-on-bad-type.js.txt,138,34,1,1
 replace-indexed-backreferences.js.txt,422,29,1,1
 const-tdz.js.txt,3141,64,1,1
-instanceof-custom-hasinstancesymbol.js.txt,163,41,2,1
 infinite-loop-that-uses-captured-variables-before-throwing.js.txt,223,37,2,1
 get-my-argument-by-val-constant-folding.js.txt,93,32,1,1
 async-arrow-function-in-class-heritage.js.txt,169,33,1,1
@@ -1057,7 +1054,6 @@ direct-arguments-in-bounds-to-out-of-bounds.js.txt,140,31,1,1
 object-number-properties.js.txt,1746,43,1,1
 double-rep-real-number-use-on-nan.js.txt,309,39,1,1
 regress-182419.js.txt,239,37,1,1
-instanceof-dynamic-proxy-check-structure.js.txt,1309,55,2,1
 prop-type-number-then-string.js.txt,196,37,2,1
 sink-arguments-past-invalid-check-dfg.js.txt,120,36,2,2
 simple-prototype-accesses.js.txt,172,36,2,2

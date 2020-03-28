@@ -260,7 +260,6 @@ generator-function-expression-sinking-osrexit.js.txt,5,27,7,21, 27,15,0,11.775,1
 object-keys-changed-index.js.txt,1,21,5,20, 21,7,0,6.375,56.1338375224,202.610537586,2,0,9,0,2
 string-code-point-at-basic.js.txt,0,2,0,15, 2,2,0,2.5,20.6797000058,51.6992500144,1,0,0,0,0
 disable-gigacage-typed-arrays.js.txt,1,17,6,32, 19,11,0,25.0357142857,405.496460605,9088.47203894,2,0,5,0,3
-async-await-syntax.js.txt,5,144,3,30, 370,22,0,106.275776954,3103.88712214,26540.5842837,11,0,123,0,2
 regress-159883.js.txt,1,3,0,15, 3,2,0,0,0,0,0,0,1,0,0
 date-get-month-jit.js.txt,1,15,5,21, 15,6,0,6.625,51.9706685866,197.767091857,2,0,4,0,1
 super-call-does-not-look-up-constructor.js.txt,1,11,1,20, 8,5,0,4.875,42.7939875195,168.798506327,2,0,5,2,0
@@ -454,7 +453,6 @@ array-slice-zero-args.js.txt,1,14,4,20, 15,7,0,6.625,51.9706685866,197.767091857
 switch-typeof-indirect.js.txt,1,27,2,25, 34,20,0,11.2916666667,248.220704525,1004.65655812,4,1,9,0,1
 regress-189124.js.txt,1,26,2,18, 21,4,0,13.8214285714,176.000851604,1287.34529631,2,0,15,0,1
 object-create-undefined.js.txt,2,22,4,27, 21,9,0,9.77272727273,173.684148921,1245.54353647,2,0,8,0,2
-string-overflow-createError-fit.js.txt,1,8,1,17, 9,2,0,0,0,0,0,0,4,0,0
 array-storage-array-unshift.js.txt,1,6,1,14, 6,2,0,0,0,0,0,0,3,0,0
 get-stack-double.js.txt,1,7,1,19, 8,8,0,5.83333333333,62.9074752084,366.960272049,2,0,2,0,2
 array-push-multiple-double-nan.js.txt,3,18,3,24, 19,8,0,7.075,74.0391000173,263.621062576,2,0,7,0,1
@@ -485,7 +483,6 @@ fiat-double-to-int52-then-exit-not-int52.js.txt,2,14,4,20, 14,5,0,2.0,24.0,48.0,
 jsc-setImpureGetterDelegate-on-bad-type.js.txt,1,13,5,21, 13,4,0,4.0,42.0,168.0,1,0,3,0,0
 replace-indexed-backreferences.js.txt,1,20,5,23, 20,4,0,3.33333333333,25.2661942985,84.2206476617,1,0,12,0,0
 const-tdz.js.txt,9,350,80,40, 364,149,0,266.018910256,3652.72094631,23874.4064991,84,3,128,0,17
-instanceof-custom-hasinstancesymbol.js.txt,2,17,2,22, 18,10,0,9.35714285714,103.858483699,641.17245965,4,0,5,0,1
 infinite-loop-that-uses-captured-variables-before-throwing.js.txt,3,25,5,28, 24,10,0,12.4333333333,175.19893234,1247.82872023,3,0,5,0,2
 get-my-argument-by-val-constant-folding.js.txt,0,9,1,37, 12,5,0,6.83333333333,72.5273192274,342.308747394,2,0,3,0,1
 async-arrow-function-in-class-heritage.js.txt,3,16,1,27, 18,9,0,14.5,219.799871918,1779.70303454,2,0,5,0,0
@@ -1057,7 +1054,6 @@ direct-arguments-in-bounds-to-out-of-bounds.js.txt,1,10,2,20, 12,7,0,5.375,46.03
 object-number-properties.js.txt,1,96,11,21, 106,6,0,5.875,65.0391000173,206.921062576,2,0,80,0,1
 double-rep-real-number-use-on-nan.js.txt,5,39,3,19, 29,15,0,20.25,206.870549278,1814.03118318,3,0,15,0,3
 regress-182419.js.txt,1,24,0,21, 19,10,0,14.5734126984,258.693808252,873.779529606,5,0,12,0,1
-instanceof-dynamic-proxy-check-structure.js.txt,4,136,11,29, 41,12,0,11.025,169.470043464,700.121317863,6,0,10,101,1
 prop-type-number-then-string.js.txt,2,18,5,16, 19,7,0,3.66666666667,34.3482341693,63.2786361171,2,0,5,0,2
 sink-arguments-past-invalid-check-dfg.js.txt,1,13,3,19, 13,5,0,2.5,22.8496250072,38.5669187612,2,0,5,0,1
 simple-prototype-accesses.js.txt,1,15,2,18, 15,5,0,2.5,23.2646625065,58.1616562662,2,0,7,0,1
