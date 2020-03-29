@@ -1,3 +1,4 @@
+import Queue
 class Node:
     def __init__(self,type_,L,R,id,le):
         self.type_ = type_
@@ -25,6 +26,26 @@ def list_cmp(node_a,node_b):
 
 def node_list_cmp(x,y):
     return x-y
+
+def bfs(Tree_list):
+    q_node = Queue.Queue()
+    q_node.put(0)
+    q_level = Queue.Queue()
+    q_level.put(1)
+    list_ = [0] *10000
+    maxnn = 0
+    while not q_node.empty():
+        node_id = q_node.get()
+        node_level = q_level.get()
+        length_ = len(Tree_list[node_id].node_list)
+        list_[node_level] += 1
+        maxnn = max(list_[node_level],maxnn)
+        for i in range(length_):
+            q_node.put(Tree_list[node_id].node_list[i])
+            q_level.put(node_level+1)
+
+    return maxnn
+	
 
 def run(_id,Tree_list):
     global numOfNodes
@@ -122,21 +143,23 @@ for file_name in files:
     list_for_nest = [0 for x in range(0,len(Tree_list))]
     list_number = []
     count_for_nest(0,Tree_list,list_for_nest,list_number,set_a)
+    maxWidth = bfs(Tree_list)
     #print(len(set_a))
     avDepthOfNest = 0
     maxDepthOfNest = 0
     for il in list_number:
-	maxDepthOfNest  = max(maxDepthOfNest,il)
+        maxDepthOfNest  = max(maxDepthOfNest,il)
         avDepthOfNest += il
     if len(list_number)==0:
-	avDepthOfNest = 0
+        avDepthOfNest = 0
     else:
     	avDepthOfNest /= len(list_number)
     print(numOfNodes)
     print(len(set_a))
     print(maxDepthOfNest)
     print(avDepthOfNest)
-    content += file_name + ','+ str(numOfNodes) + ',' + str(len(set_a)) + ',' + str(maxDepthOfNest) + ',' + str(avDepthOfNest)+'\n'
+    print(maxWidth)
+    content += file_name + ','+ str(numOfNodes) + ',' + str(len(set_a)) + ',' + str(maxDepthOfNest) + ',' + str(avDepthOfNest)+','+str(maxWidth)+'\n'
 	
     print("-----------------------------------------------------------------------------------------------------")
 
