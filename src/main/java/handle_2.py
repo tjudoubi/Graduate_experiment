@@ -208,10 +208,9 @@ for file_name in files:
 ##############################################################################################################
 content = ""
 for temp in list_:
-	content += str(temp.name)+','+str(temp.numOfIf)+','+str(temp.numOfStatement)+','+str(temp.numOfvariableDeclaration)+','+str(temp.maxDepthOfAST)+','+str(temp.numOfLoc)+','+str(temp.Cyclomatic)+','+str(temp.numOfDepend)+','+str(temp.Halstead_difficulty)+','+str(temp.Halstead_volume)+','+str(temp.Halstead_effort)+','+str(temp.numOfMethod)+','+str(temp.numOfSwitch)+','+str(temp.numOfExpression)+','+str(temp.numOfClass)+','+str(temp.numOfIteration)+'\n'
+	content += str(temp.name)+','+str(temp.numOfIf+temp.numOfSwitch)+','+str(temp.numOfStatement)+','+str(temp.numOfvariableDeclaration)+','+str(temp.maxDepthOfAST)+','+str(temp.numOfLoc)+','+str(temp.Cyclomatic)+','+str(temp.numOfDepend)+','+str(temp.Halstead_difficulty)+','+str(temp.Halstead_volume)+','+str(temp.Halstead_effort)+','+str(temp.numOfMethod)+','+str(temp.numOfExpression)+','+str(temp.numOfClass)+','+str(temp.numOfIteration)+'\n'
 
 f = open('/home/doubi/opo_js/target_2/vector_1', 'w') #清空文件内容再写
 f.write(content)
 f.close()
-
 
