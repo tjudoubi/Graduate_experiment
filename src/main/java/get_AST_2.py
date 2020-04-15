@@ -156,7 +156,8 @@ for file_name in files:
     print(maxDepthOfNest)
     print(avDepthOfNest)
     print(maxWidth)
-    content += file_name + ','+ str(numOfNodes) + ',' + str(len(set_a)) + ',' + str(maxDepthOfNest) + ',' + str(avDepthOfNest)+','+str(maxWidth)+'\n'
+    print(len(list_number))
+    content += file_name + ','+ str(numOfNodes) + ',' + str(len(set_a)) + ',' + str(maxDepthOfNest) + ',' + str(avDepthOfNest)+','+str(maxWidth)+','+str(len(list_number))+'\n'
 	
     print("-----------------------------------------------------------------------------------------------------")
 
