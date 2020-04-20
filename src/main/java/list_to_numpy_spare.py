@@ -98,42 +98,39 @@ l2 = data.corr('spearman')
 l3 = data.corr('pearson')
 
 
-# l1.to_csv('kendall_1.csv',encoding='gbk')
-# l2.to_csv('spearman_1.csv',encoding='gbk')
+l1.to_csv('kendall_1_2.csv',encoding='gbk')
+l2.to_csv('spearman_1_2.csv',encoding='gbk')
 
-# fig = plt.figure()
-# ax = fig.add_subplot(figsize=(20,20)) #图片大小为20*20
-# # ax = sns.heatmap(l2[['line coverage','function coverage','branch coverage']], linewidths=0.05,vmax=1, vmin=0 ,annot=True,annot_kws={'size':15,'weight':'bold'})
-# # #热力图参数设置（相关系数矩阵，颜色，每个值间隔等）
-# # #ticks = numpy.arange(0,16,1) #生成0-16，步长为1
-# # plt.xticks(np.arange(3)+0.5,fontsize=16) #横坐标标注点
-# # plt.yticks(np.arange(23)+0.5,fontsize=16) #纵坐标标注点
-#
-# ax = sns.heatmap(l2, linewidths=0.05,vmax=1, vmin=0 ,annot=True,annot_kws={'weight':'bold'})
+fig = plt.figure()
+ax = fig.add_subplot(figsize=(20,20)) #图片大小为20*20
+# ax = sns.heatmap(l2[['line coverage','function coverage','branch coverage']], linewidths=0.05,vmax=1, vmin=0 ,annot=True,annot_kws={'size':15,'weight':'bold'})
 # #热力图参数设置（相关系数矩阵，颜色，每个值间隔等）
 # #ticks = numpy.arange(0,16,1) #生成0-16，步长为1
-# plt.xticks(np.arange(23)+0.5,fontsize=16) #横坐标标注点
+# plt.xticks(np.arange(3)+0.5,fontsize=16) #横坐标标注点
 # plt.yticks(np.arange(23)+0.5,fontsize=16) #纵坐标标注点
-#
-# #ax.set_xticks(ticks) #生成刻度
-# #ax.set_yticks(ticks)
-# #ax.set_xticklabels(names) #生成x轴标签
-# #ax.set_yticklabels(names)
-# ax.set_title('spearman')#标题设置
-# plt.savefig('cluster3.tif',dpi=300)
-# plt.show()
+
+ax = sns.heatmap(l2, linewidths=0.05,vmax=1, vmin=0 ,annot=True,annot_kws={'weight':'bold'})
+#热力图参数设置（相关系数矩阵，颜色，每个值间隔等）
+#ticks = numpy.arange(0,16,1) #生成0-16，步长为1
+plt.xticks(np.arange(23)+0.5,fontsize=16) #横坐标标注点
+plt.yticks(np.arange(23)+0.5,fontsize=16) #纵坐标标注点
+
+#ax.set_xticks(ticks) #生成刻度
+#ax.set_yticks(ticks)
+#ax.set_xticklabels(names) #生成x轴标签
+#ax.set_yticklabels(names)
+ax.set_title('spearman')#标题设置
+plt.savefig('cluster3.tif',dpi=300)
+plt.show()
 
 # p1 = kstest(dict1['numOfExpression'], 'norm')
 # p = stats.kendalltau(x=dict1['numOfExpression'],y=dict1['function coverage'])
 
 p_list = []
-dict3 = {}
-dict3_keys = []
+pp_list = []
 for element in dict1.keys():
-    dict3_keys.append(element)
-    dict3[element] = []
+    ll_li = []
     l_li = []
-    l_li.append(element)
     # # ll_li.append(element)
     # ll_li.append(stats.kendalltau(x=dict1[element],y=dict1['function coverage'])[1])
     # ll_li.append(stats.kendalltau(x=dict1[element],y=dict1['line coverage'])[1])
@@ -143,35 +140,36 @@ for element in dict1.keys():
     # l_li.append(stats.kendalltau(x=dict1[element], y=dict1['function coverage'])[1])
     # l_li.append(stats.kendalltau(x=dict1[element], y=dict1['line coverage'])[1])
     # l_li.append(stats.kendalltau(x=dict1[element], y=dict1['branch coverage'])[1])
-    for key in dict1.keys():
-        dict3[element].append(stats.kendalltau(x=dict1[element], y=dict1[key])[1])
 
-        l_li.append(stats.kendalltau(x=dict1[element], y=dict1[key])[1])
+    ll_li.append(stats.kendalltau(x=dict1[element], y=dict1['FC'])[1])
+    ll_li.append(stats.kendalltau(x=dict1[element], y=dict1['LC'])[1])
+    ll_li.append(stats.kendalltau(x=dict1[element], y=dict1['BC'])[1])
 
-    dict3[element] = np.array(dict3[element])
+    l_li.append(element)
+    l_li.append(stats.kendalltau(x=dict1[element], y=dict1['FC'])[1])
+    l_li.append(stats.kendalltau(x=dict1[element], y=dict1['LC'])[1])
+    l_li.append(stats.kendalltau(x=dict1[element], y=dict1['BC'])[1])
+
+    pp_list.append(ll_li)
     p_list.append(l_li)
 
-p_list_numpy = np.array(p_list)
-dict4 = {}
-for element in dict1.keys():
-    dict4[element] = multipletests(dict3[element], alpha=0.05, method='bonferroni', is_sorted=False, returnsorted=False)[1]
-data_Frame = pd.DataFrame(dict4,index=dict3_keys,dtype='double')
-data_Frame.to_csv('kendall_1_2_correct_bonferroni.csv',encoding='gbk')
-
-x = dict1[dict2['n']]
-y = dict1[dict2['w']]
-z1 = np.polyfit(x, y, 0) # 用4次多项式拟合
-p1 = np.poly1d(z1)
-print(p1) # 在屏幕上打印拟合多项式
-yvals=p1(x) # 也可以使用yvals=np.polyval(z1,x)
-plot1=plt.plot(x, y, '*',label='original values')
-plot2=plt.plot(x, yvals, 'r',label='polyfit values')
-plt.xlabel('x axis')
-plt.ylabel('y axis')
-plt.legend(loc=4) # 指定legend的位置,读者可以自己help它的用法
-plt.title('polyfitting')
-plt.show()
 
 
+pp_list_numpy = np.array(pp_list)
+p_adjust_line = multipletests(pp_list_numpy[:,1], alpha=0.05, method='bonferroni', is_sorted=False, returnsorted=False)
+p_adjust_fucntion = multipletests(pp_list_numpy[:,0], alpha=0.05, method='bonferroni', is_sorted=False, returnsorted=False)
+p_adjust_branch = multipletests(pp_list_numpy[:,2], alpha=0.05, method='bonferroni', is_sorted=False, returnsorted=False)
+print(p_adjust_branch[1])
+array_a = np.vstack((p_adjust_line[1],p_adjust_fucntion[1],p_adjust_branch[1]) )
+array_b = np.array((p_adjust_line[0],p_adjust_fucntion[0],p_adjust_branch[0]))
+
+array_a = array_a.T.tolist()
+array_b = array_b.T.tolist()
+
+for i in range(len(array_a)):
+    array_a[i].insert(0,dict2[chr(ord('a')+i)])
+
+for i in range(len(array_b)):
+    array_b[i].insert(0, dict2[chr(ord('a') + i)])
 
 print(p_list)
