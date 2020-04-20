@@ -153,10 +153,17 @@ for element in dict1.keys():
 
 p_list_numpy = np.array(p_list)
 dict4 = {}
+# for element in dict1.keys():
+#     dict4[element] = multipletests(dict3[element], alpha=0.05, method='bonferroni', is_sorted=False, returnsorted=False)[1]
+# data_Frame = pd.DataFrame(dict4,index=dict3_keys,dtype='double')
+# data_Frame.to_csv('kendall_1_2_correct_bonferroni.csv',encoding='gbk')
 for element in dict1.keys():
-    dict4[element] = multipletests(dict3[element], alpha=0.05, method='bonferroni', is_sorted=False, returnsorted=False)[1]
-data_Frame = pd.DataFrame(dict4,index=dict3_keys,dtype='double')
-data_Frame.to_csv('kendall_1_2_correct_bonferroni.csv',encoding='gbk')
+    dict4[element] = 1-multipletests(dict3[element], alpha=0.05, method='bonferroni', is_sorted=False, returnsorted=False)[0]
+data_Frame = pd.DataFrame(dict4,index=dict3_keys,dtype='int')
+data_Frame.to_csv('spearman_1_2_correct_bonferroni.csv',encoding='gbk')
+
+
+
 
 x = dict1[dict2['n']]
 y = dict1[dict2['w']]
